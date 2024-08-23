@@ -1,4 +1,4 @@
-paddlepaddle==2.5.2
+paddlepaddle==2.6.1
 paddlespeech==1.4.1
 opencc==1.1.1
 matplotlib==3.8.4
