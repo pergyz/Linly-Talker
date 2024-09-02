@@ -16,7 +16,7 @@ spaces
 moviepy
 librosa==0.10.2
 ultralytics # for wav2lipv2
-gradio==4.36.1
+gradio==4.37.1
 scikit_learn==1.4.2
 
 # SadTalker related libraries
