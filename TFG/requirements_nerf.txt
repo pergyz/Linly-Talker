@@ -31,7 +31,7 @@ librosa
 fvcore
 iopath
 
-../NeRF/freqencoder
-../NeRF/gridencoder
-../NeRF/raymarching
-../NeRF/shencoder
+NeRF/freqencoder
+NeRF/gridencoder
+NeRF/raymarching
+NeRF/shencoder
