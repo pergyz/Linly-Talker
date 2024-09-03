@@ -1,5 +1,6 @@
-import os
 from paddlespeech.cli.tts.infer import TTSExecutor
+import shlex
+import subprocess
 
 """
 PaddleSpeech
@@ -82,6 +83,8 @@ class PaddleTTS:
         use_onnx = True
         voc = voc.lower()
         am = am.lower()
+
+        text = shlex.quote(text)
         
         if male:
             assert voc in ["pwgan", "hifigan"], "male voc must be 'pwgan' or 'hifigan'"
@@ -117,10 +120,22 @@ class PaddleTTS:
             spk_id = 10
         print("am:", am, "voc:", voc, "lang:", lang, "male:", male, "spk_id:", spk_id)
         try:
-            cmd = f'paddlespeech tts --am {am} --voc {voc} --input "{text}" --output {save_path} --lang {lang} --spk_id {spk_id} --use_onnx {use_onnx}'
-            os.system(cmd)
+            cmd = [
+                'paddlespeech', 'tts',
+                '--am', am,
+                '--voc', voc,
+                '--input', text,
+                '--output', save_path,
+                '--lang', lang,
+                '--spk_id', str(spk_id),
+                '--use_onnx', str(use_onnx)
+            ]
+            subprocess.run(cmd, check=True)
             wav_file = save_path
-        except:
+        except subprocess.CalledProcessError as e:
+            print(f"Command failed with exit code {e.returncode}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
             # 语音合成
             wav_file = self.tts(
                 text = text,
